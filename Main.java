@@ -1,6 +1,6 @@
-import java.awt.Component;
-
 //package main
+
+import java.awt.Component;
 
 public class Main {
 
