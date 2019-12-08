@@ -23,23 +23,23 @@ public class Renderer {
 
 	public void renderImage(BufferedImage image, int xPos, int yPos, int xZoom, int yZoom, boolean fixed) { 
 		int[] imagePixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-		renderPixels(imagePixels, xPos, yPos, image.getWidth(), image.getHeight(), xZoom, yZoom, fixed, Main.alphaImage);
+		renderPixels(imagePixels, xPos, yPos, image.getWidth(), image.getHeight(), xZoom, yZoom, fixed, Display.alphaImage);
     }
 
     public void renderSprite(Sprite sprite, int xPos, int yPos, int xZoom, int yZoom, boolean fixed) {
-        renderPixels(sprite.getPixels(), xPos, yPos, sprite.getWidth(), sprite.getHeight(), xZoom, yZoom, fixed, Main.alphaChannel);
+        renderPixels(sprite.getPixels(), xPos, yPos, sprite.getWidth(), sprite.getHeight(), xZoom, yZoom, fixed, Display.alphaChannel);
     }
     
     public void renderRectangle(Rectangle rectangle, int xZoom, int yZoom, boolean fixed) {
 		int[] rectanglePixels = rectangle.getPixels();
 		if(rectanglePixels != null)
-			renderPixels(rectanglePixels,rectangle.x,rectangle.y,rectangle.w,rectangle.h, xZoom, yZoom, fixed, Main.alphaChannel);
+			renderPixels(rectanglePixels,rectangle.x,rectangle.y,rectangle.w,rectangle.h, xZoom, yZoom, fixed, Display.alphaChannel);
 	}
 
 	public void renderRectangle(Rectangle rectangle, Rectangle off, int xZoom, int yZoom, boolean fixed) {
 		int[] rectanglePixels = rectangle.getPixels();
 		if(rectanglePixels != null)
-			renderPixels(rectanglePixels,rectangle.x+off.x,rectangle.y+off.y,rectangle.w,rectangle.h, xZoom, yZoom, fixed, Main.alphaChannel);
+			renderPixels(rectanglePixels,rectangle.x+off.x,rectangle.y+off.y,rectangle.w,rectangle.h, xZoom, yZoom, fixed, Display.alphaChannel);
 	}
 
 	public void renderPixels(int[] array, int xPos, int yPos, int renderW, int renderH, int xZoom, int yZoom, boolean fixed, int alpha) {

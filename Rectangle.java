@@ -26,7 +26,7 @@ public class Rectangle {
 		pixels = new int[w*h];
 
 		for(int i = 0; i < pixels.length; i++)
-			pixels[i] = Main.alphaChannel;
+			pixels[i] = Display.alphaChannel;
 
 		for(int y = 0; y < border; y++)
 			for(int x = 0; x < w; x++)
