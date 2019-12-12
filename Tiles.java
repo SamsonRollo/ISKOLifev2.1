@@ -27,7 +27,6 @@ public class Tiles {
 				if(lineComponents.length >=4) {
 					tile.collision = true;
 					tile.collisionCategory = Integer.valueOf(lineComponents[3]);
-
 				}
 
 				tileList.add(tile);
@@ -44,7 +43,6 @@ public class Tiles {
 			System.out.println("Tile id is out of bounds");
 	}
 
-	//RACM
 	public int size() {
 		return tileList.size();
 	}
