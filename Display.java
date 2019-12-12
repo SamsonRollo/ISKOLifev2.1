@@ -14,8 +14,10 @@ public class Display extends Canvas implements Screen{
      */
     private static final long serialVersionUID = 1L;
 
-    private JFrame frame;
-    private Renderer renderer;
+    protected JFrame frame;
+    protected Renderer renderer;
+
+    public Display() {}
 
     public Display(JFrame frame) {
         this.frame = frame;
