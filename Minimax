@@ -1,0 +1,60 @@
+/*
+I dunno kun ansya na adi pero based hit mga
+nabasa ko, bagan siring hini an ira gamit
+*/
+
+public void moveProf(Graphics2D g2d) {
+        short i;
+        int pos;
+        int count;
+        for (i = 0; i < nrofprof; i++) {
+            if (profx[i] % blocksize == 0 && profy[i] % blocksize == 0) {
+                pos = profx[i] / blocksize + nrofblocks * (int)(profy[i] / blocksize);
+                count = 0;
+                if ((screendata[pos] & 1) == 0 && profdx[i] != 1) {
+                    dx[count] = -1;
+                    dy[count] = 0;
+                    count++;
+                }
+                if ((screendata[pos] & 2) == 0 && profdy[i] != 1) {
+                    dx[count] = 0;
+                    dy[count] = -1;
+                    count++;
+                }
+                if ((screendata[pos] & 4) == 0 && profdx[i] != -1) {
+                    dx[count] = 1;
+                    dy[count] = 0;
+                    count++;
+                }
+                if ((screendata[pos] & 8) == 0 && profdy[i] != -1) {
+                    dx[count] = 0;
+                    dy[count] = 1;
+                    count++;
+                }
+                if (count == 0) {
+                    if ((screendata[pos] & 15) == 15) {
+                        profdx[i] = 0;
+                        profdy[i] = 0;
+                    } else {
+                        profdx[i] = -profdx[i];
+                        profdy[i] = -profdy[i];
+                    }
+                } else {
+                    count = (int)(Math.random() * count);
+                    if (count > 3)
+                        count = 3;
+                    profdx[i] = dx[count];
+                    profdy[i] = dy[count];
+                }
+            }
+            profx[i] = profx[i] + (profdx[i] * profspeed[i]);
+            profy[i] = profy[i] + (profdy[i] * profspeed[i]);
+            DrawProf(g2d, profx[i] + 1, profy[i] + 1);
+            if (studentx > (profx[i] - 12) && studentx < (profx[i] + 12) &&
+                studenty > (profy[i] - 12) && studenty < (profy[i] + 12) &&
+                ingame) {
+                dying = true;
+                deathcounter = 64;
+            }
+        }
+    }
