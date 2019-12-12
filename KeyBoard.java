@@ -49,4 +49,8 @@ public class KeyBoard implements KeyListener, FocusListener {
 	public boolean enter() {
 		return keys[KeyEvent.VK_ENTER];
 	}
+
+	public boolean esc() {
+		return keys[KeyEvent.VK_ESCAPE];
+	}
 }
