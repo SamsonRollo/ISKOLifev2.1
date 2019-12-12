@@ -18,11 +18,10 @@ public class Display extends Canvas implements Runnable{
 
     public static int alphaImage = 0x00ffff;
     public static int alphaChannel = 0xff00ffff;
+    public KeyBoard keyboard = new KeyBoard(this);
 
     protected JFrame frame;
     protected Renderer renderer;
-
-    protected KeyBoard keyboard = new KeyBoard(this);
 
     public Display() {}
 
@@ -63,4 +62,8 @@ public class Display extends Canvas implements Runnable{
 		}catch(IOException c){ return null; }
 
 	}
+
+    public KeyBoard getKeyListener() {
+        return keyboard;
+    }
 }

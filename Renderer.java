@@ -65,6 +65,10 @@ public class Renderer {
 			pixels[pixelIndex] = pixel;
 	}
 
+	public Rectangle getCamera(){
+		return screenView;
+	}
+
 	public void clearScreen(){
 		for(int i = 0; i<pixels.length; i++)
 			pixels[i]=0;
