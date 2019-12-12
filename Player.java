@@ -1,49 +1,12 @@
-import  java.awt.image.BufferedImage;
-import java.util.Random;
+public class Player extends Character {
 
-public class Player implements GameObject {
+	protected int speed = 3;
 
-	private Rectangle playerBody;
-	private Rectangle collisionCheckRectangle;
-	private Renderer render;
-	private int speed = 3;
-	private Sprite sprite;
-	private AnimatedSprite animatedSprite = null;
-	private int direction = 0; //0-DOWN 1-LEFT 2-RIGHT 3-UP
-	private Game game;
-	
-	private int xOffset=0;
-	private int yOffset=0;
-
-	public Player(Sprite sprite, int xZoom, int yZoom, Game game) {
-		this.sprite = sprite;
-		this.game = game;
-
-		if(sprite != null && sprite instanceof AnimatedSprite)
-			animatedSprite = (AnimatedSprite) sprite;
-
-		updateDirection();
-		playerBody = new Rectangle(60,-10,31,48);
-		collisionCheckRectangle = new Rectangle(0,0,16,10);
+	public Player(Sprite sprite, int posx, int posy, int xZoom, int yZoom, int sizex, int sizey, int colx, int coly, Game game){
+		setCharacter(sprite, posx, posy, xZoom, yZoom, sizex, sizey, colx, coly, game);
 	}
 
-	private void updateDirection() {
-		if(animatedSprite!=null) {
-			animatedSprite.setAnimateRange(direction*3, (direction*3)+3);
-		}
-	}
-
-	public void render(Renderer render, int xZoom, int yZoom) {
-		
-		if(animatedSprite!=null) {
-			render.renderSprite(animatedSprite,playerBody.x,playerBody.y,xZoom,yZoom, false);
-		}
-		else if(sprite!=null)
-			render.renderSprite(sprite,playerBody.x,playerBody.y,xZoom,yZoom, false);
-		else
-			render.renderRectangle(playerBody,xZoom,yZoom, false);
-	}
-
+	@Override
 	public void update(Game game) {
 		KeyBoard keyboard = game.getKeyListener();
 
@@ -55,14 +18,14 @@ public class Player implements GameObject {
 		if(keyboard.up()) {
 			newDir = 3;
 			move = true;
-			xOffset=6;
+			xOffset=7;
 			yOffset=5;
 			playerBody.y -=speed;
 		}
 		if(keyboard.down()) {
 			newDir = 0;
 			move = true; 
-			xOffset=6;
+			xOffset=7;
 			playerBody.y +=speed;
 		}
 		if(keyboard.left()) {
@@ -105,5 +68,10 @@ public class Player implements GameObject {
 		}
 	}
 
-	public Rectangle getRectangle() {return playerBody;}
+	@Override
+	protected void updateDirection() {
+		if(animatedSprite!=null) {
+			animatedSprite.setAnimateRange(direction*3, (direction*3)+3);
+		}
+	}
 }
