@@ -22,6 +22,7 @@ public class Display extends Canvas implements Runnable{
 
     protected JFrame frame;
     protected Renderer renderer;
+    protected boolean stop = false;
 
     public Display() {}
 
@@ -34,7 +35,7 @@ public class Display extends Canvas implements Runnable{
 		double nspPerPass = 1000000000D / 60D;
 		double deltaTime = 0;
 
-		while(true) {
+		while(!stop) {
 			long now = System.nanoTime();
 
 			deltaTime += (now - startTime) / nspPerPass;
