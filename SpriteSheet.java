@@ -11,8 +11,6 @@ public class SpriteSheet {
 	private boolean containedSprite = false;
 	private int spriteWIDTH;
     private Sprite[] spriteList = null;
-    
-    public SpriteSheet() {}
 
 	public SpriteSheet(BufferedImage sheet) {
 		image = sheet;

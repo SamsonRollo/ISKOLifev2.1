@@ -12,7 +12,7 @@ public class Renderer {
     public Renderer() {}
 
 	public Renderer(int w, int h) {
-		screenView = new Rectangle(0,0,w,h);
+		screenView = new Rectangle(-390,-330,w,h);
 		screen = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt) screen.getRaster().getDataBuffer()).getData();
 	}
@@ -63,10 +63,6 @@ public class Renderer {
 
 		if(pixels.length > pixelIndex && (pixel != alpha))
 			pixels[pixelIndex] = pixel;
-	}
-
-	public Rectangle getCamera() {
-		return screenView;  
 	}
 
 	public void clearScreen(){

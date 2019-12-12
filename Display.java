@@ -2,25 +2,33 @@
 
 import java.awt.Canvas;
 import java.awt.Graphics;
-import java.awt.Color;
-import java.awt.image.BufferStrategy;
-import java.lang.Runnable;
+import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.awt.event.KeyEvent; //RACM
 
-public class Display extends Canvas implements Screen{
+
+public class Display extends Canvas implements Runnable{
 
     /**
      *
      */
     private static final long serialVersionUID = 1L;
 
+    public static int alphaImage = 0x00ffff;
+    public static int alphaChannel = 0xff00ffff;
+
     protected JFrame frame;
     protected Renderer renderer;
+
+    protected KeyBoard keyboard = new KeyBoard(this);
 
     public Display() {}
 
     public Display(JFrame frame) {
         this.frame = frame;
+        renderer = new Renderer(frame.getWidth(), frame.getHeight());
     }
     public void run(){
         long startTime = System.nanoTime();
@@ -40,16 +48,19 @@ public class Display extends Canvas implements Screen{
 		}
     }
 
-    public void render(){
-        BufferStrategy bs = frame.getBufferStrategy();
-        Graphics g = bs.getDrawGraphics();
-
-        super.paint(g);
-        g.setColor(Color.red);
-        g.fillOval(50, 50, 50, 50);
-        g.dispose();
-        bs.show();
-    }
+    public void render(){}
 
     public void update(){}
+
+    public BufferedImage loadImage(String path) {
+
+		try{
+			BufferedImage loadedImage =  ImageIO.read(Game.class.getResource(path));
+			BufferedImage argbImage = new BufferedImage(loadedImage.getWidth(), loadedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+			argbImage.getGraphics().drawImage(loadedImage,0,0,null);
+
+			return argbImage;
+		}catch(IOException c){ return null; }
+
+	}
 }

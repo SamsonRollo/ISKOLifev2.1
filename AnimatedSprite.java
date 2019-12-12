@@ -21,7 +21,7 @@ public class AnimatedSprite extends Sprite implements GameObject {
 	}
 
 	public AnimatedSprite(SpriteSheet sheet, int speed) {
-		sprites = sheet.getLoadedSprites();
+		sprites = sheet.getspriteLists();
 		this.speed = speed;
 		this.endSprite = sprites.length - 1;
 	}

@@ -3,10 +3,10 @@ import java.awt.event.*;
 public class KeyBoard implements KeyListener, FocusListener {
 	
 	public boolean[] keys = new boolean[120];
-	private Game game;
+	private Display display;
 
-	public KeyBoard(Game game) {
-		this.game = game;
+	public KeyBoard(Display display) {
+		this.display = display;
 	}
 
 	public void keyPressed(KeyEvent e) {
