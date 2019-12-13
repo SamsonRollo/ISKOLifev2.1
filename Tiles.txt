@@ -13,8 +13,8 @@ bottombushtoplefttop-0-10
 topbushtoprighttop-0-11
 bottombushtoprighttop-0-12
 13brick-1-0
-14rightFence-1-1
-15leftFence-1-2
+14horiBush-1-1-0
+15vertiBush-1-2-0
 16bottomFence-1-3
 17topFence-1-4
 18dirt-1-7
