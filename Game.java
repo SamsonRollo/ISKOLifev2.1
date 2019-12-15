@@ -29,31 +29,31 @@ public class Game extends Display{
     }
 
     private void initGame(){
-        BufferedImage sheetImage =  loadImage("sprite_sheet.png");
+        BufferedImage sheetImage =  loadImage("resrc/sprite_sheet.png");
 		sheet = new SpriteSheet(sheetImage);
         sheet.loadSprite(60,60);
 
-        lock = loadImage("lock.png");
-        pixFrame = loadImage("Frame.png");
-        ow = loadImage("overwin.png");
-        ol = loadImage("overlose.png");
+        lock = loadImage("resrc/lock.png");
+        pixFrame = loadImage("resrc/Frame.png");
+        ow = loadImage("resrc/overwin.png");
+        ol = loadImage("resrc/overlose.png");
 
   //       BufferedImage fontImage = loadImage("font.png");
 		// fontSheet = new SpriteSheet(fontImage);
 		// fontSheet.loadSprite(14,18);
         
         //initialize the board
-        tiles = new Tiles(new File("Tiles.txt"), sheet);
+        tiles = new Tiles(new File("resrc/Tiles.txt"), sheet);
         gameBoard = new GameBoard(tiles);
 
         //31x48 player size sprite
-		BufferedImage playerImage = loadImage("player.png");
+		BufferedImage playerImage = loadImage("resrc/player.png");
 		playerSheet = new SpriteSheet(playerImage);
 		playerSheet.loadSprite(60,60);
         AnimatedSprite playerAnimation = new AnimatedSprite(playerSheet, 8);
 
         //17x29 mob size
-        BufferedImage mobImage = loadImage("prof.png");
+        BufferedImage mobImage = loadImage("resrc/prof.png");
         mobSheet = new SpriteSheet(mobImage);
         mobSheet.loadSprite(60,60);
         AnimatedSprite mobAnimation = new AnimatedSprite(mobSheet, 8);

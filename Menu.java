@@ -19,9 +19,9 @@ public class Menu extends Display{
     public Menu(JFrame frame) {
         super.frame = frame;
         super.renderer = new Renderer(frame.getWidth(), frame.getHeight());//remove later
-        bg1 =  loadImage("mainMenu.png");//change later to classpath
-        selStart = loadImage("selectStart.png");
-        selExit = loadImage("selectExit.png");
+        bg1 =  loadImage("resrc/mainMenu.png");//change later to classpath
+        selStart = loadImage("resrc/selectStart.png");
+        selExit = loadImage("resrc/selectExit.png");
     }
 
     @Override
