@@ -14,12 +14,14 @@ public class Menu extends Display{
      */
     private static final long serialVersionUID = 1L;
     private int currentSelection = 1;
-    private BufferedImage bg1 = null;
+    private BufferedImage bg1 = null, selStart = null, selExit=null;
 
     public Menu(JFrame frame) {
         super.frame = frame;
         super.renderer = new Renderer(frame.getWidth(), frame.getHeight());//remove later
-        bg1 =  loadImage("bg1.png");
+        bg1 =  loadImage("mainMenu.png");//change later to classpath
+        selStart = loadImage("selectStart.png");
+        selExit = loadImage("selectExit.png");
     }
 
     @Override
@@ -28,9 +30,13 @@ public class Menu extends Display{
         Graphics g = bs.getDrawGraphics();
         super.paint(g);
         renderer.renderImage(bg1,0,0,1,1,true);
-        renderer.render(g);
 
-        updateSlection(g);
+        if(currentSelection==1)
+            renderer.renderImage(selStart,231,287,1,1,true);
+        else
+            renderer.renderImage(selExit,230,366,1,1,true);
+
+        renderer.render(g);
 
         g.dispose();
         bs.show();
@@ -61,43 +67,8 @@ public class Menu extends Display{
             
             stop = true;
         }
-
-    }
-
-    public void updateSlection(Graphics g) {
-        switch(currentSelection){
-            case 1:
-                g.setColor(Color.red);
-                g.fillRect(400,250,100,50);
-                g.setColor(Color.blue);
-                g.fillRect(400,310,100,50);
-                // g.fillRect(400,320,100,50);
-                // g.fillRect(400,380,100,50);
-                break;
-            case 2:
-                g.setColor(Color.red);
-                g.fillRect(400,310,100,50);
-                g.setColor(Color.blue);
-                g.fillRect(400,250,100,50);
-                // g.fillRect(400,320,100,50);
-                // g.fillRect(400,380,100,50);
-                break;
-            // case 3:
-            //     g.setColor(Color.red);
-            //     g.fillRect(400,320,100,50);
-            //     g.setColor(Color.blue);
-            //     g.fillRect(400,200,100,50);
-            //     g.fillRect(400,260,100,50);
-            //     g.fillRect(400,380,100,50);
-            //     break;
-            // case 4:
-            //     g.setColor(Color.red);
-            //     g.fillRect(400,380,100,50);
-            //     g.setColor(Color.blue);
-            //     g.fillRect(400,200,100,50);
-            //     g.fillRect(400,260,100,50);
-            //     g.fillRect(400,320,100,50);
-            //        break;
+        else if(keyboard.enter() && currentSelection==2){
+            System.exit(0);
         }
     }
 }

@@ -1,6 +1,6 @@
 public class Player extends Character {
 
-	protected int speed = 3;
+	protected int speed = 1;
 	public boolean keyClick = false, visualizing=false;
 	public boolean timeRunning = false, next;
 	public int arbx, arby;
@@ -44,7 +44,7 @@ public class Player extends Character {
 				if(playerState == PlayerState.MOVE){
 					if(game.gameBoard.canMove(true, tempX,tempY)){ //getplayer y and x
 						game.gameBoard.move(true, tempX, tempY); //after update iteration destroy
-						moving=20;
+						moving=60;
 						visualizing=true;
 						arbx = currentX;
 						arby =currentY;

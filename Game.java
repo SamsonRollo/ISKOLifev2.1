@@ -46,9 +46,9 @@ public class Game extends Display{
         gameBoard = new GameBoard(tiles);
 
         //31x48 player size sprite
-		BufferedImage playerImage = loadImage("player_male.png");
+		BufferedImage playerImage = loadImage("player.png");
 		playerSheet = new SpriteSheet(playerImage);
-		playerSheet.loadSprite(31,48);
+		playerSheet.loadSprite(60,60);
         AnimatedSprite playerAnimation = new AnimatedSprite(playerSheet, 8);
 
         //17x29 mob size
@@ -58,7 +58,7 @@ public class Game extends Display{
         AnimatedSprite mobAnimation = new AnimatedSprite(mobSheet, 8);
      
         gameObjects = new GameObject[2];
-		player = new Player(playerAnimation, 31, 270, 1, 1, 31, 48,this);
+		player = new Player(playerAnimation, 30, 270, 1, 1, 60, 60,this);
         mob = new Mob(mobAnimation, 510, 270, 1, 1, 60, 60,this);
         gameObjects[1]=mob;
         gameObjects[0]=player;
