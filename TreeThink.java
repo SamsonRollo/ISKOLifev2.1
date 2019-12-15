@@ -7,6 +7,8 @@ public class TreeThink{
 	private int depth;
 	private GameBoard gameBoard;
 	private boolean human;
+	public int xMove;
+	public int yMove;
 
 	public TreeThink(){}
 
@@ -15,11 +17,13 @@ public class TreeThink{
 		this.gameBoard = gameBoard;
 		this.human= human;
 	}
-
+	//add refactor
 	public void aiMove(){
 		Node root = new Node(gameBoard,0,0,!human,false);
 		Node maxMove = maxMove(root);
 		gameBoard.move(human, maxMove.x, maxMove.y);
+		xMove = maxMove.x;
+		yMove = maxMove.y;
 	}
 
 	public void aiDestroy(){
@@ -146,13 +150,12 @@ public class TreeThink{
 			this.moved = moved;
 		}
 	}
-	
-	//refactor 
-	// public MinimaxStrategy(Board board, boolean player1, int depth) {
-	// 	super(board, player1);
-	// 	this.depth = depth;
-		
-	// 	WAITINGTIME = 800 - depth * 100;
-	// 	WAITINGTIME = (WAITINGTIME > 0)?WAITINGTIME:0;
-	// }
+
+	public int getXMove(){
+		return xMove;
+	}
+
+	public int getYMove(){
+		return yMove;
+	} 
 }
