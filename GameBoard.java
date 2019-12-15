@@ -135,6 +135,10 @@ public class GameBoard{
 		return getPossibleMoveCount(character)==0;
 	}
 
+	public boolean whoLost(){
+		return hasLost(true);
+	}
+
 	public int getPossibleMoveCount(boolean human){
 		int moveCount = 0;
 		int x, y;

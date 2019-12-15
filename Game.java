@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 public class Game extends Display{
 
     private SpriteSheet playerSheet, mobSheet, sheet, fontSheet;
-    private BufferedImage lock = null, pixFrame = null;
+    private BufferedImage lock = null, pixFrame = null, ow=null, ol=null;
     private Rectangle outline, clear;
 	private Tiles tiles, fontTiles;
     private GameObject[] gameObjects;
@@ -34,8 +34,9 @@ public class Game extends Display{
         sheet.loadSprite(60,60);
 
         lock = loadImage("lock.png");
-
         pixFrame = loadImage("Frame.png");
+        ow = loadImage("overwin.png");
+        ol = loadImage("overlose.png");
 
   //       BufferedImage fontImage = loadImage("font.png");
 		// fontSheet = new SpriteSheet(fontImage);
@@ -83,6 +84,11 @@ public class Game extends Display{
 
         renderer.renderImage(pixFrame, 0, 0, 1, 1, false);
 
+        if(gameBoard.isGameOver() && gameBoard.whoLost())
+            renderer.renderImage(ol,0,0,1,1,true);
+        else if(gameBoard.isGameOver() && !gameBoard.whoLost())
+            renderer.renderImage(ow,0,0,1,1,true);
+
         renderer.render(g);
         g.dispose();
         bs.show();
@@ -91,7 +97,7 @@ public class Game extends Display{
 
     @Override 
     public void update() {
-        if(keyboard.esc() && keyboard.enter()){
+        if((keyboard.esc() && keyboard.enter()) || (gameBoard.isGameOver() && keyboard.enter())){
             Display menu = new Menu(frame);
             Thread menuThread = new Thread(menu);
             frame.add((Component) menu);
@@ -103,9 +109,6 @@ public class Game extends Display{
             }catch(java.lang.Exception e){};
             stop=true;
         }
-
-        if(gameBoard.isGameOver())
-            System.out.println("Game is over");
 
         //actual game is evaluated in this part 
         for(int i = 0; i< gameObjects.length; i++)
