@@ -35,6 +35,7 @@ public class Tiles {
 		}catch(FileNotFoundException cc) {cc.printStackTrace();}
 	}
 
+	//use for making map
 	public void renderTile(int tileIndex, Renderer render, int xPos, int yPos, int xZoom, int yZoom) {
 		if(tileIndex >= 0 && tileList.size()>tileIndex) {
 			render.renderSprite(tileList.get(tileIndex).sprite, xPos, yPos, xZoom, yZoom, false);

@@ -1,45 +1,82 @@
+import java.lang.Thread;
+
 public class Mob extends Character {
 
-	private int cycle = 0;
-	private int tempdir = 4;
 	protected int speed = 1;
-	public static boolean running = false;
+	private int running = 0;
+	public boolean created = false, visualizing=false;
+	private TreeThink tt;
+	private int arbx, arby;
 
-	public Mob(Sprite sprite, int posx, int posy, int xZoom, int yZoom, int sizex, int sizey, int colx, int coly, Game game){
-		setCharacter(sprite, posx, posy, xZoom, yZoom, sizex, sizey, colx, coly, game);
+	public Mob(Sprite sprite, int posx, int posy, int xZoom, int yZoom, int sizex, int sizey, Game game){
+		setCharacter(sprite, posx, posy, xZoom, yZoom, sizex, sizey, 8, 4, game);
+		currentX = 8;
+		currentY = 4;
 	}
 
 	@Override
-	public void update(Game game) { //copy to player in implementing the ai
-		int newDir = 0;
-		int pastX = playerBody.x;
-		int pastY = playerBody.y;	
+	public void update(Game game) { //copy to player in implementing the a
+		//recieve dir after aiMove
 
-		if(running){
-			if(cycle==0){//d check
-				newDir = 0;
-				xOffset=5;
-				yOffset=-7;
-				playerBody.y +=speed;
+		if(visualizing)
+			aiUpdate();
+
+		if(!visualizing && Game.state == Game.State.AIMOVE){
+
+			if(playerState == PlayerState.MOVE){
+				tt = new TreeThink(game.gameBoard, false, 3);
+				tt.aiMove();
+				arbx = currentX;
+				arby = currentY;
+				tempX = tt.getXMove();
+				tempY = tt.getYMove();
+				currentY = tt.getYMove();
+				currentX = tt.getXMove();
+				running = 60;
+				visualizing = true;
 			}
-			else if(cycle==1){//l check
+
+			else if(playerState == PlayerState.DESTROY){
+				visualizing = true;
+					tt = new TreeThink(game.gameBoard, false, 3);
+					tt.aiDestroy();
+					Time t = new Time();
+					t.start();
+			}
+		}
+	}
+
+	@Override
+	protected void updateDirection() {
+		if(animatedSprite!=null) {
+			animatedSprite.setAnimateRange(direction*8, (direction*8)+8);
+		}
+	}
+
+	private void aiUpdate(){
+		boolean isrunning = false;
+		int newDir =0;
+
+		if(running>0){
+			
+			if(arbx>tempX){//l check
 				newDir = 1;
-				yOffset=-7; 
-				xOffset=5;
 				playerBody.x -= speed;
 			}
-			else if(cycle==2){//r
+			else if(arbx<tempX){//r
 				newDir = 2;
-				yOffset=-7; 
-				xOffset=5;
 				playerBody.x += speed;
 			}
-			else{//u
+			if(arby<tempY){//d check
+				newDir = 0;
+				playerBody.y +=speed;
+			}
+			else if(arby>tempY){//u
 				newDir = 3;
-				xOffset=5;
-				yOffset=-7;
 				playerBody.y -=speed;
 			}
+			
+			isrunning = true;
 		}
 
 		if(newDir!=direction){
@@ -47,39 +84,40 @@ public class Mob extends Character {
 			updateDirection();
 		}
 
-		if(!running)
+		if(isrunning)
+			running--;
+
+		if(!(running>0)){
 			animatedSprite.reset();
-
-
-		if(running){
-			collisionCheckRectangle.x = playerBody.x + xOffset;
-			collisionCheckRectangle.y = playerBody.y + 30 + yOffset;
-
-			Rectangle newCollisionRect = new Rectangle(collisionCheckRectangle.x, collisionCheckRectangle.y, collisionCheckRectangle.w, collisionCheckRectangle.h);
-
-			boolean xMove = game.getMap().checkCollision(newCollisionRect);
-			boolean yMove = game.getMap().checkCollision(newCollisionRect);
-
-			if(xMove || yMove){
-				if(xMove) 
-					playerBody.x = pastX;
-				
-				if(yMove)
-					playerBody.y = pastY;
-					
-				 cycle = (int) Math.floor((tempdir)%4);
-				 tempdir++;
-			}
-
-			animatedSprite.update(game);
 		}
-		running =false;
+
+		animatedSprite.update(game);
+
+		if(isrunning && running==0) {
+			Delay d = new Delay();
+			d.start();
+		}
 	}
 
-	@Override
-	protected void updateDirection() {
-		if(animatedSprite!=null) {
-			animatedSprite.setAnimateRange(direction*8, (direction*8)+8);
+	class Time extends Thread{
+		public void run(){
+			try{
+				sleep(1000);
+			}catch(java.lang.Exception e){};
+			game.state = Game.State.HUMANMOVE;
+			playerState = PlayerState.MOVE;
+			visualizing = false;
+		}
+	}
+
+	//destroy delay
+	class Delay extends Thread{
+		public void run(){
+			try{
+				sleep(200);
+			}catch(java.lang.Exception f){};
+			visualizing = false;
+			playerState = PlayerState.DESTROY;
 		}
 	}
 }
