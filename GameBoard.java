@@ -157,7 +157,7 @@ public class GameBoard{
 		return moveCount;
 	}
 
-	private enum GameTile{
+	public enum GameTile{
 		FREE, HUMAN, AI, BLOCKED
 	}
 }

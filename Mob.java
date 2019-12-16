@@ -24,7 +24,7 @@ public class Mob extends Character {
 		if(!visualizing && Game.state == Game.State.AIMOVE){
 
 			if(playerState == PlayerState.MOVE){
-				tt = new TreeThink(game.gameBoard, false, 3);
+				tt = new TreeThink(game.gameBoard, 3);
 				tt.aiMove();
 				arbx = currentX;
 				arby = currentY;
@@ -38,7 +38,7 @@ public class Mob extends Character {
 
 			else if(playerState == PlayerState.DESTROY){
 				visualizing = true;
-					tt = new TreeThink(game.gameBoard, false, 3);
+					tt = new TreeThink(game.gameBoard, 3);
 					tt.aiDestroy();
 					Time t = new Time();
 					t.start();
