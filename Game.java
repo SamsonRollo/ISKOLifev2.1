@@ -124,6 +124,6 @@ public class Game extends Display{
     }
 
     public static enum State{
-        HUMANMOVE, AIMOVE
+        HUMANMOVE, AIMOVE, HOLD
     }
 }

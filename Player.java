@@ -60,6 +60,7 @@ public class Player extends Character {
 				else if(playerState == PlayerState.DESTROY){
 					if(game.gameBoard.canDestroy(tempX,tempY)){
 						game.gameBoard.destroy(tempX,tempY);
+						game.state = Game.State.HOLD;
 						tempY = currentY;
 						tempX = currentX;
 						DelayAI da = new DelayAI();
