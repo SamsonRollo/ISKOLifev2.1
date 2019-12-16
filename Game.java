@@ -97,7 +97,7 @@ public class Game extends Display{
 
     @Override 
     public void update() {
-        if((keyboard.esc() && keyboard.enter()) || (gameBoard.isGameOver() && keyboard.enter())){
+        if((keyboard.esc() && keyboard.enter()) || (gameBoard.isGameOver() && keyboard.esc())){
             Display menu = new Menu(frame);
             Thread menuThread = new Thread(menu);
             frame.add((Component) menu);
