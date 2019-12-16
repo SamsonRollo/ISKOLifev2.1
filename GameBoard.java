@@ -7,7 +7,6 @@ public class GameBoard{
 
 	public int xHuman, yHuman, xAI, yAI;
 	public GameTile[][] gameBoard;
-	public boolean hasChange = false;
 	private Tiles tiles;
 	
 	public GameBoard(Tiles tiles){
@@ -28,7 +27,7 @@ public class GameBoard{
 		gameBoard[xAI][yAI] = GameTile.AI;
 	}
 
-	//might have no use
+	//ai based board
 	public GameBoard(GameBoard updatedGameBoard){
 		gameBoard = new GameTile[WIDTH][HEIGHT];
 
@@ -40,8 +39,6 @@ public class GameBoard{
 		this.yHuman = updatedGameBoard.yHuman;
 		this.xAI = updatedGameBoard.xAI;
 		this.yAI = updatedGameBoard.yAI;
-
-		hasChange = true;
 	}
 
 	public void renderBoard(Renderer renderer, int xZoom, int yZoom){
@@ -76,9 +73,6 @@ public class GameBoard{
 		if(!canDestroy(x,y))
 			return;
 		gameBoard[x][y] = GameTile.BLOCKED;
-
-		// if(isGameOver())
-		// 	Game.state = Game.State.OVER;
 	}
 
 	public boolean inGameBounds(int x, int y){
@@ -100,8 +94,6 @@ public class GameBoard{
 	}
 
 	public boolean canDestroy(int x, int y){
-		if(!inGameBounds(x,y))
-			return false;
 		if(!inGameBounds(x,y))
 			return false;
 
