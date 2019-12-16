@@ -6,24 +6,30 @@ public class TreeThink{
 
 	private int depth;
 	private GameBoard gameBoard;
-	private boolean human;
+	private boolean human = false;
 	public int xMove;
 	public int yMove;
 
 	public TreeThink(){}
 
-	public TreeThink(GameBoard gameBoard, boolean human, int depth){
+	public TreeThink(GameBoard gameBoard, int depth){
 		this.depth = depth;
 		this.gameBoard = gameBoard;
-		this.human= human;
 	}
 	//add refactor
 	public void aiMove(){
 		Node root = new Node(gameBoard,0,0,!human,false);
 		Node maxMove = maxMove(root);
-		gameBoard.move(human, maxMove.x, maxMove.y);
+		
+		if((maxMove.x==gameBoard.xAI) && (maxMove.y==gameBoard.yAI))
+			maxMove = corneredValidMove(maxMove.x,maxMove.y);
+
 		xMove = maxMove.x;
 		yMove = maxMove.y;
+
+		System.out.println("y: "+yMove+" x: "+xMove+" canMove: "+gameBoard.canMove(false,xMove,yMove)+" gametile state "+gameBoard.gameBoard[xMove][yMove]);
+
+		gameBoard.move(human, maxMove.x, maxMove.y);
 	}
 
 	public void aiDestroy(){
@@ -34,10 +40,12 @@ public class TreeThink{
 
 	private Node maxMove(Node root){
 		double maxMoveValue = Double.NEGATIVE_INFINITY;
-		Node maxMove = new Node(gameBoard,0,0,human,false);
+		double upperbound = Double.NEGATIVE_INFINITY;
+		double lowerbound = Double.POSITIVE_INFINITY;
+		Node maxMove = new Node(gameBoard,gameBoard.xAI,gameBoard.yAI,human,false);
 
 		for(Node node : createMinMaxTree(root)){
-			double curNodeValue = minMax(node, depth, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
+			double curNodeValue = minMax(node, depth, upperbound, lowerbound);
 			if(curNodeValue>maxMoveValue){
 				maxMoveValue = curNodeValue;
 				maxMove = node;
@@ -85,7 +93,7 @@ public class TreeThink{
 		}
 
 		ArrayList<Node> possibleMoves = createMinMaxTree(node);
-		if((node.human == this.human && node.moved) || node.human != this.human && !node.moved){ //possible group debug
+		if((node.human == false && node.moved)){ //possible group debug
 			for(Node moveNode : possibleMoves) {
 				double currNodeValue = minMax(moveNode, depth-1, upperbound, lowerbound);
 				upperbound = Math.max(currNodeValue, upperbound);
@@ -115,10 +123,12 @@ public class TreeThink{
 		double playerPos = node.gameBoard.getPossibleMoveCount(human)- proximityToCenter(node.gameBoard, human);
 		double otherPlayerPos = node.gameBoard.getPossibleMoveCount(!human)-proximityToCenter(node.gameBoard, !human);
 
+		//System.out.println("moved "+((5 * playerPos / 4) - otherPlayerPos / 4) + " not "+(playerPos / 4 - (5 * otherPlayerPos / 4)));
+
 		if(node.moved) //refactor re movement distance
-			return (3 * playerPos / 2) - otherPlayerPos / 2;
+			return (5 * playerPos / 4) - otherPlayerPos / 4;
 		else
-			return  playerPos / 2 - (3 * otherPlayerPos / 2);
+			return  playerPos / 4 - (5 * otherPlayerPos / 4);
 
 	}
 
@@ -132,6 +142,22 @@ public class TreeThink{
 		
 		return Math.sqrt(Math.pow(centerx - xPos, 2) 
 			           + Math.pow(centery - yPos, 2));
+	}
+
+	private Node corneredValidMove(int x, int y){
+
+		for(int i = -1; i<=1; i++){
+			for(int j = -1; j<=1; j++){
+				if(gameBoard.inGameBounds(x+i,y+j)){
+					try{
+						if(gameBoard.gameBoard[x+i][y+j]==GameBoard.GameTile.FREE)
+							return (new Node(gameBoard, x+i, y+j, false, true));
+					}catch(ArrayIndexOutOfBoundsException e){};
+				}
+			}
+		}
+		//does not found tile
+		return (new Node(gameBoard, x, y, false, true));
 	}
 
 	class Node{
