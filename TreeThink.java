@@ -26,9 +26,7 @@ public class TreeThink{
 
 		xMove = maxMove.x;
 		yMove = maxMove.y;
-
-		System.out.println("y: "+yMove+" x: "+xMove+" canMove: "+gameBoard.canMove(false,xMove,yMove)+" gametile state "+gameBoard.gameBoard[xMove][yMove]);
-
+		//System.out.println("y: "+yMove+" x: "+xMove+" canMove: "+gameBoard.canMove(false,xMove,yMove)+" gametile state "+gameBoard.gameBoard[xMove][yMove]);
 		gameBoard.move(human, maxMove.x, maxMove.y);
 	}
 
