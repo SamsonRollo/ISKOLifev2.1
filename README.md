@@ -1,8 +1,7 @@
 # ISKOLifev2.1
 Remake of ISKOLife using minimax
 
-please commit on the minimax branch for the minimax implementation
-
-//add more
+THIS REPO IS CLOSED. PLEASE CREATE YOUR
+OWN VERSION OF THE GAME IF YOU WANT.
 
 enjoy coding
